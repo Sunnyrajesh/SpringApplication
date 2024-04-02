@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker image with a tag
-                    sh 'docker build -t pannamrajesh/spring-application .'
+                    sh 'docker build -t pannamrajesh/spring-boot-app .'
                 }
             }
         }
