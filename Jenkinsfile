@@ -1,61 +1,32 @@
 pipeline {
-
-    agent any
-
-     tools{
-
-         maven 'MAVEN_HOME'
-
-         dockerTool 'docker'
-
-     }
-
-    stages {
-
-        stage('Build') {
-
-            steps {
-
-                sh 'mvn clean package' // Build the Spring Boot application with Maven
-
-            }
-
-        }
-
-        stage('Build Docker Image') {
-
-            steps {
-
-                script {
-
-                   docker.build('my-spring-boot-app') // Build a Docker image named my-spring-boot-app
-
-                }
-
-            }
-
-        }
-
-        stage('Deploy') {
-
-            steps {
-
-                script {
-
-                    // Push the Docker image to a Docker registry
-
-                    // Deploy the Docker image to your Docker environment
-
-                    //sh 'docker tag my-spring-boot-app prasannaharigopal/my-spring-boot-app:latest'
-
-                    sh 'docker run -d -p 8888:8080 my-spring-boot-app:latest'
-
-                }
-
-            }
-
-        }
-
+    agent any 
+    tools {
+        maven 'MAVEN_HOME'
+	    dockerTool 'docker'
     }
-
+    stages {
+        stage('Build Maven') {
+            steps {
+                // Build the Maven project
+                bat 'mvn clean install'
+            }
+        }
+        stage('Build docker image') {
+            steps {
+                script {
+                    // Build Docker image with a tag
+                    bat 'docker build -t pannamrajesh/spring-application .'
+                }
+            }
+        }
+        stage('Run container') {
+            steps {
+                script {
+                    // Run Docker container
+                    // pannamrajesh is a repoistory/imagename
+                    bat 'docker run -d -p 8080:8080 pannamrajesh/spring-application'
+                }
+            }
+        }
+    }
 }
