@@ -8,14 +8,14 @@ pipeline {
         stage('Build Maven') {
             steps {
                 // Build the Maven project
-                bat 'mvn clean install'
+                sh 'mvn clean install'
             }
         }
         stage('Build docker image') {
             steps {
                 script {
                     // Build Docker image with a tag
-                    bat 'docker build -t pannamrajesh/spring-application .'
+                    sh 'docker build -t pannamrajesh/spring-application .'
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
                 script {
                     // Run Docker container
                     // pannamrajesh is a repoistory/imagename
-                    bat 'docker run -d -p 8080:8080 pannamrajesh/spring-application'
+                    sh 'docker run -d -p 8080:8080 pannamrajesh/spring-application'
                 }
             }
         }
