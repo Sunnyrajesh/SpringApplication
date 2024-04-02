@@ -24,7 +24,7 @@ pipeline {
                 script {
                     // Run Docker container
                     // pannamrajesh is a repoistory/imagename
-                    sh 'docker run -d -p 8080:8080 pannamrajesh/spring-application'
+                    sh 'docker run -d -p 8081:8080 pannamrajesh/spring-application'
                 }
             }
         }
